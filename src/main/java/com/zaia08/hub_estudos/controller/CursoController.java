@@ -25,14 +25,14 @@ public class CursoController {
     @Autowired
     CursoRepository repository;
 
-    private CursoService cursoService;
+    private final CursoService cursoService;
 
     public CursoController(CursoService cursoService) {
         this.cursoService = cursoService;
     }
 
     @GetMapping
-    public ResponseEntity getCurso(){
+    public ResponseEntity<List<Curso>> getCurso(){
         List<Curso> listCurso = repository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(listCurso);
     }
