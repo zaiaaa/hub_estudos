@@ -33,7 +33,7 @@ public class CursoController {
 
     @GetMapping
     public ResponseEntity<List<Curso>> getCurso(){
-        List<Curso> listCurso = repository.findAll();
+        List<Curso> listCurso = cursoService.getCursos();
         return ResponseEntity.status(HttpStatus.OK).body(listCurso);
     }
 
@@ -43,4 +43,14 @@ public class CursoController {
         return ResponseEntity.created(URI.create("curso/" + cursoId)).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Curso> alterCurso(
+            @PathVariable int id,
+            @RequestBody AlterCursoDTO dto
+    ){
+
+        Curso curso = cursoService.alterCurso(dto, id);
+        return ResponseEntity.ok(curso);
+
+    }
 }
