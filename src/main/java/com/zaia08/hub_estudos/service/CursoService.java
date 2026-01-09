@@ -40,11 +40,26 @@ public class CursoService {
         Curso entity = cursoRepository.findById(id).orElseThrow(() -> new RuntimeException("nao encontrado"));
 
 
-        entity.setNomeCurso(alterCursoDTO.nome_curso());
-        entity.setHorasDesejadas(alterCursoDTO.horas_desejadas());
-        entity.setHorasAtuais(alterCursoDTO.horas_atuais());
-        entity.setMetaDeConclusao(alterCursoDTO.meta_de_conclusao());
-        entity.setResumoSemanal(alterCursoDTO.resumo_semanal());
+        if (alterCursoDTO.nome_curso() != null) {
+            entity.setNomeCurso(alterCursoDTO.nome_curso());
+        }
+
+        if (alterCursoDTO.horas_desejadas() != null) {
+            entity.setHorasDesejadas(alterCursoDTO.horas_desejadas());
+        }
+
+        if (alterCursoDTO.horas_atuais() != null) {
+            entity.setHorasAtuais(alterCursoDTO.horas_atuais());
+        }
+
+        if (alterCursoDTO.meta_de_conclusao() != null) {
+            entity.setMetaDeConclusao(alterCursoDTO.meta_de_conclusao());
+        }
+
+        if (alterCursoDTO.resumo_semanal() != null) {
+            entity.setResumoSemanal(alterCursoDTO.resumo_semanal());
+        }
+
         return cursoRepository.save(entity);
 
 
