@@ -62,8 +62,15 @@ public class CursoService {
 
         return cursoRepository.save(entity);
 
+    }
 
+    public boolean deleteCurso(int id){
+        if(!cursoRepository.existsById(id)){
+            return false;
+        }
 
+        cursoRepository.deleteById(id);
+        return true;
     }
 
 }

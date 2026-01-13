@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/curso")
 public class CursoController {
@@ -43,7 +44,7 @@ public class CursoController {
         return ResponseEntity.created(URI.create("curso/" + cursoId)).build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Curso> alterCurso(
             @PathVariable int id,
             @RequestBody AlterCursoDTO dto
@@ -52,5 +53,15 @@ public class CursoController {
         Curso curso = cursoService.alterCurso(dto, id);
         return ResponseEntity.ok(curso);
 
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Curso> deleteCurso(@PathVariable int id){
+        boolean deleted = cursoService.deleteCurso(id);
+        if(deleted){
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }
