@@ -19,6 +19,18 @@ public class Curso {
     @Column(name = "horas_atuais")
     private Integer horasAtuais;
 
+    @Column(name = "prioridade")
+    private String prioridade;
+
+    @Column(name = "meta_de_conclusao")
+    private LocalDate metaDeConclusao;
+
+    @Column(name = "resumo_semanal")
+    private Boolean resumoSemanal;
+
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
     public Long getId() {
         return id;
     }
@@ -51,6 +63,14 @@ public class Curso {
         this.horasAtuais = horasAtuais;
     }
 
+    public String getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(String prioridade) {
+        this.prioridade = prioridade;
+    }
+
     public LocalDate getMetaDeConclusao() {
         return metaDeConclusao;
     }
@@ -74,14 +94,5 @@ public class Curso {
     public void setUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
     }
-
-    @Column(name = "meta_de_conclusao")
-    private LocalDate metaDeConclusao;
-
-    @Column(name = "resumo_semanal")
-    private Boolean resumoSemanal;
-
-    @Column(name = "usuario_id")
-    private Long usuarioId;
 }
 
