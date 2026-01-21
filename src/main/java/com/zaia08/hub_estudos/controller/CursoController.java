@@ -40,8 +40,8 @@ public class CursoController {
 
     @PostMapping
     public ResponseEntity<Curso> addCurso(@RequestBody CreateCursoDTO createCursoDTO){
-        var cursoId = cursoService.createCurso(createCursoDTO);
-        return ResponseEntity.created(URI.create("curso/" + cursoId)).build();
+        var cursoSalvo = cursoService.createCurso(createCursoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cursoSalvo);
     }
 
     @PutMapping("/editar/{id}")

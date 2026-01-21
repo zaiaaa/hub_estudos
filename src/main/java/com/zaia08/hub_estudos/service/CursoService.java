@@ -17,7 +17,7 @@ public class CursoService {
         this.cursoRepository = cursoRepository;
     }
 
-    public long createCurso(CreateCursoDTO createCursoDTO){
+    public Curso createCurso(CreateCursoDTO createCursoDTO){
         //DTO -> Entity; Gravar entity.
 
         var entity = new Curso();
@@ -26,9 +26,10 @@ public class CursoService {
         entity.setHorasAtuais(createCursoDTO.horas_atuais());
         entity.setMetaDeConclusao(createCursoDTO.meta_de_conclusao());
         entity.setResumoSemanal(createCursoDTO.resumo_semanal());
+        entity.setPrioridade(createCursoDTO.prioridade());
         var cursoSaved = cursoRepository.save(entity);
 
-        return cursoSaved.getId();
+        return cursoSaved;
     }
 
     public List<Curso> getCursos(){
