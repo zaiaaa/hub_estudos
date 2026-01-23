@@ -17,7 +17,7 @@ public class Curso {
     private Integer horasDesejadas;
 
     @Column(name = "horas_atuais")
-    private Integer horasAtuais;
+    private Float horasAtuais;
 
     @Column(name = "prioridade")
     private String prioridade;
@@ -55,11 +55,11 @@ public class Curso {
         this.horasDesejadas = horasDesejadas;
     }
 
-    public Integer getHorasAtuais() {
+    public Float getHorasAtuais() {
         return horasAtuais;
     }
 
-    public void setHorasAtuais(Integer horasAtuais) {
+    public void setHorasAtuais(Float horasAtuais) {
         this.horasAtuais = horasAtuais;
     }
 

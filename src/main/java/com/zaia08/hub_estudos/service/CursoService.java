@@ -6,6 +6,8 @@ import com.zaia08.hub_estudos.controller.CreateCursoDTO;
 import com.zaia08.hub_estudos.repositories.CursoRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -27,9 +29,8 @@ public class CursoService {
         entity.setMetaDeConclusao(createCursoDTO.meta_de_conclusao());
         entity.setResumoSemanal(createCursoDTO.resumo_semanal());
         entity.setPrioridade(createCursoDTO.prioridade());
-        var cursoSaved = cursoRepository.save(entity);
 
-        return cursoSaved;
+        return cursoRepository.save(entity);
     }
 
     public List<Curso> getCursos(){
@@ -50,7 +51,10 @@ public class CursoService {
         }
 
         if (alterCursoDTO.horas_atuais() != null) {
-            entity.setHorasAtuais(alterCursoDTO.horas_atuais());
+
+            entity.setHorasAtuais(BigDecimal.valueOf(alterCursoDTO.horas_atuais())
+                    .setScale(2, RoundingMode.HALF_UP).
+                    floatValue());
         }
 
         if (alterCursoDTO.meta_de_conclusao() != null) {
