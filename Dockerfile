@@ -23,4 +23,5 @@ EXPOSE 8080
 COPY --from=build /app/target/hub_estudos-0.0.1-SNAPSHOT.jar app.jar
 
 # Comando para rodar a aplicação
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Isso diz ao Spring: "Pegue o valor da variável PORT (do Render) e use como server.port"
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT} -jar app.jar"]
