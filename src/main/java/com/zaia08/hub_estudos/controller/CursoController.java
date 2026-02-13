@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://192.168.0.113:571")
 @RestController
 @RequestMapping("/curso")
 public class CursoController {
