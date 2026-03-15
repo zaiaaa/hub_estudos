@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/avaliacao")
@@ -23,11 +25,18 @@ public class AvaliacaoController {
 
     public AvaliacaoController(AvaliacaoService avaliacaoService){this.avaliacaoService = avaliacaoService; }
 
-    @PostMapping
-    public ResponseEntity<Avaliacao> addAvaliacao(@RequestBody CreateAvaliacaoDTO createAvaliacaoDTO){
+    @GetMapping
+    public ResponseEntity<List<Avaliacao>> getAvaliacao(){
+        List<Avaliacao> avaliacoes = avaliacaoService.getAvaliacao();
+        return ResponseEntity.status(HttpStatus.OK).body(avaliacoes);
+    }
 
-        var avaliacaoSalva = avaliacaoService.createAvaliacao(createAvaliacaoDTO);
+    @PostMapping
+    public ResponseEntity<String> addAvaliacao(@RequestBody CreateAvaliacaoDTO createAvaliacaoDTO){
+
+        String avaliacaoSalva = avaliacaoService.createAvaliacao(createAvaliacaoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(avaliacaoSalva);
+        //aqui retornamos a resposta da AI em JSON.
 
     }
 

@@ -2,6 +2,7 @@ package com.zaia08.hub_estudos.controller;
 
 import com.zaia08.hub_estudos.Model.Curso;
 import com.zaia08.hub_estudos.repositories.CursoRepository;
+import com.zaia08.hub_estudos.service.AvaliacaoService;
 import com.zaia08.hub_estudos.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-@CrossOrigin(origins = "http://192.168.0.113:571")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/curso")
 public class CursoController {
@@ -27,9 +28,11 @@ public class CursoController {
     CursoRepository repository;
 
     private final CursoService cursoService;
+    private final AvaliacaoService avaliacaoService;
 
-    public CursoController(CursoService cursoService) {
+    public CursoController(CursoService cursoService, AvaliacaoService avaliacaoService) {
         this.cursoService = cursoService;
+        this.avaliacaoService = avaliacaoService;
     }
 
     @GetMapping
@@ -57,8 +60,10 @@ public class CursoController {
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Curso> deleteCurso(@PathVariable int id){
-        boolean deleted = cursoService.deleteCurso(id);
-        if(deleted){
+        boolean deletedAvaliacao = avaliacaoService.deleteAvaliacao(id);
+        boolean deletedCurso = cursoService.deleteCurso(id);
+
+        if(deletedCurso && deletedAvaliacao){
             return ResponseEntity.noContent().build();
         }else{
             return ResponseEntity.notFound().build();
