@@ -1,5 +1,6 @@
 package com.zaia08.hub_estudos.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import com.zaia08.hub_estudos.Model.Avaliacao;
 import com.zaia08.hub_estudos.controller.AlterAvaliacaoDTO;
 import com.zaia08.hub_estudos.controller.CreateAvaliacaoDTO;
@@ -19,9 +20,10 @@ public class AvaliacaoService {
 
     private final AvaliacaoRepository avaliacaoRepository;
     private final CursoRepository cursoRepository;
+    @Value("${WEBHOOK_URL}")
+    private String webhookUrl;
 
     private final RestTemplate restTemplate;
-    private final String WEBHOOK_URL = "http://192.168.0.113:5678/webhook/8c02e7ad-0533-40ff-9a62-d63969b2f6a6";
     //URL DE PRODUÇÃO.
     public AvaliacaoService(AvaliacaoRepository avaliacaoRepository, RestTemplate restTemplate, CursoRepository cursoRepository){
         this.avaliacaoRepository = avaliacaoRepository;
@@ -102,7 +104,7 @@ public class AvaliacaoService {
 
     private String correcao(Avaliacao avaliacao){
         try{
-            ResponseEntity<String> response = restTemplate.postForEntity(WEBHOOK_URL, avaliacao, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity(webhookUrl, avaliacao, String.class);
             return response.getBody();
         }catch (Exception e){
             System.err.println("O n8n falhou ou demorou demais: " + e.getMessage());
