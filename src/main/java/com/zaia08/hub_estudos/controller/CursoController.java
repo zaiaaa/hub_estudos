@@ -49,7 +49,7 @@ public class CursoController {
 
     @PutMapping("/editar/{id}")
     public ResponseEntity<Curso> alterCurso(
-            @PathVariable int id,
+            @PathVariable Long id,
             @RequestBody AlterCursoDTO dto
     ){
 
@@ -59,7 +59,7 @@ public class CursoController {
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Curso> deleteCurso(@PathVariable int id){
+    public ResponseEntity<Curso> deleteCurso(@PathVariable Long id){
         boolean deletedAvaliacao = avaliacaoService.deleteAvaliacao(id);
         boolean deletedCurso = cursoService.deleteCurso(id);
 

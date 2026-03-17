@@ -37,7 +37,7 @@ public class CursoService {
         return cursoRepository.findAll();
     }
 
-    public Curso alterCurso(AlterCursoDTO alterCursoDTO, int id){
+    public Curso alterCurso(AlterCursoDTO alterCursoDTO, Long id){
 
         Curso entity = cursoRepository.findById(id).orElseThrow(() -> new RuntimeException("nao encontrado"));
 
@@ -69,7 +69,7 @@ public class CursoService {
 
     }
 
-    public boolean deleteCurso(int id){
+    public boolean deleteCurso(Long id){
         if(!cursoRepository.existsById(id)){
             return false;
         }

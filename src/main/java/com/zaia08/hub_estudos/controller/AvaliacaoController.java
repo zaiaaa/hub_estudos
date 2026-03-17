@@ -33,22 +33,31 @@ public class AvaliacaoController {
 
     @PostMapping
     public ResponseEntity<String> addAvaliacao(@RequestBody CreateAvaliacaoDTO createAvaliacaoDTO){
+        // 1. Salva no banco (Sincrono)
+        Avaliacao avaliacaoSalva = avaliacaoService.createAvaliacao(createAvaliacaoDTO);
 
-        String avaliacaoSalva = avaliacaoService.createAvaliacao(createAvaliacaoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(avaliacaoSalva);
-        //aqui retornamos a resposta da AI em JSON.
+        // 2. Envia para o n8n (Assincrono) - Chamamos do controller para garantir que a transação do save já fechou
+        avaliacaoService.enviarParaN8N(avaliacaoSalva);
 
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Avaliação recebida! ID: " + avaliacaoSalva.getId() + ". A correção está sendo processada pela IA em segundo plano.");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Avaliacao> alterAvaliacao(
-            @PathVariable int id,
+            @PathVariable Long id,
             @RequestBody AlterAvaliacaoDTO dto
     ){
 
         Avaliacao avaliacao = avaliacaoService.updateAvaliacao(dto, id);
         return ResponseEntity.ok(avaliacao);
 
+    }
+
+    @PostMapping("/callback/{id}")
+    public ResponseEntity<Void> callbackIA(@PathVariable Long id, @RequestBody String jsonResposta) {
+        avaliacaoService.processarCallback(id, jsonResposta);
+        return ResponseEntity.ok().build();
     }
 
 }

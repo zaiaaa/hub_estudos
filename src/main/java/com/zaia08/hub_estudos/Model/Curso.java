@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_curso")
     private Long id;
 
     @Column(name = "nome_curso", nullable = false)
