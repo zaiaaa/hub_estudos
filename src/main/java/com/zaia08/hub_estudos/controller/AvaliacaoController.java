@@ -54,7 +54,7 @@ public class AvaliacaoController {
 
     }
 
-    @PostMapping("/callback/{id}")
+    @PutMapping("/callback/{id}")
     public ResponseEntity<Void> callbackIA(@PathVariable Long id, @RequestBody String jsonResposta) {
         avaliacaoService.processarCallback(id, jsonResposta);
         return ResponseEntity.ok().build();
